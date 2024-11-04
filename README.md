@@ -1,0 +1,1 @@
+# LPOO_negociacao_acoes
