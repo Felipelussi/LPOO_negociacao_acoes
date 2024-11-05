@@ -11,8 +11,10 @@ import javax.persistence.Entity;
  * @author felipe
  */
 @Entity
-public class Corretor extends Pessoa{
+public class Corretor extends Pessoa {
+
     private int registroProfissional;
+
     public Corretor(String nome, String cpf, int registroProfissional) {
         super(nome, cpf);
         this.registroProfissional = registroProfissional;

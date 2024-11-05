@@ -20,16 +20,16 @@ import org.hibernate.annotations.Generated;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Pessoa {
+
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     int id;
     String nome;
     String cpf;
 
-    public Pessoa( String nome, String cpf) {
+    public Pessoa(String nome, String cpf) {
         this.nome = nome;
         this.cpf = cpf;
     }
 
-    
 }

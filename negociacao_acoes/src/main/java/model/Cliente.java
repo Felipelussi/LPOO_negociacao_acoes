@@ -14,12 +14,13 @@ import javax.persistence.OneToMany;
  * @author felipe
  */
 @Entity
-public class Cliente extends Pessoa{
+public class Cliente extends Pessoa {
+
     private int nConta;
-    
+
     @OneToMany(mappedBy = "id")
     private List<AcaoCliente> acoes;
-    
+
     @OneToMany(mappedBy = "id")
     private List<Negocio> negocios;
 
@@ -53,28 +54,39 @@ public class Cliente extends Pessoa{
     public void setNegocios(List<Negocio> negocios) {
         this.negocios = negocios;
     }
-    
+
     public void addNegocio(Negocio negocio) {
- 
-    this.negocios.add(negocio);
+
+        this.negocios.add(negocio);
     }
-    
-    public boolean verificaAcoes(Acao acao, int qtd){
-        
-        System.out.println(acao.getNome());
-        System.out.println("qtd: " + qtd);
-        return true;
-//        if(!this.acoes.contains(acao))
-//          return false;
-//        return this.acoes.get(this.acoes.indexOf(acao)).getQuantidade() >= qtd;
+
+    public void comprar(Acao acao, int quantidade) {
+        AcaoCliente acaoCliente = this.getAcaoCliente(acao);
+        if (acaoCliente != null) {
+            acaoCliente.setQuantidade(acaoCliente.getQuantidade() + quantidade);
+        } else {
+            acaoCliente = new AcaoCliente(acao, this, quantidade);
+            this.addAcaoCliente(acaoCliente);
+        }
+    }
+
+    public void vender(Acao acao, int quantidade) {
+        AcaoCliente acaoCliente = this.getAcaoCliente(acao);
+        if (acaoCliente == null || acaoCliente.getQuantidade() < quantidade) {
+            throw new IllegalArgumentException("Não há ações suficientes para a venda.");
+        }
+        acaoCliente.setQuantidade(acaoCliente.getQuantidade() - quantidade);
+        if (acaoCliente.getQuantidade() == 0) {
+            this.acoes.remove(acaoCliente);
+        }
     }
 
     @Override
     public String toString() {
         return "Cliente{" + "nConta=" + nConta + ", acoes=" + acoes + ", negocios=" + negocios + '}';
     }
-    
-        public AcaoCliente getAcaoCliente(Acao acao) {
+
+    public AcaoCliente getAcaoCliente(Acao acao) {
         return this.acoes.stream()
                 .filter(acaoCliente -> acaoCliente.getAcao().equals(acao))
                 .findFirst()
@@ -84,5 +96,5 @@ public class Cliente extends Pessoa{
     public void addAcaoCliente(AcaoCliente acaoCliente) {
         this.acoes.add(acaoCliente);
     }
-       
+
 }

@@ -8,7 +8,6 @@ import model.Corretor;
 import model.Acao;
 import model.Cliente;
 import java.util.Date;
-import java.util.Optional;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -55,19 +54,10 @@ public class Negocio {
         this.quantidade = quantidade;
         this.acao = acao;
         this.corretor = corretor;
-        this.data = data;        
+        this.data = data;
         comprador.addNegocio(this);
         this.atualizarEstoque();
     }
-    
-//    public static Optional<Negocio> createNegocio(Cliente comprador, Cliente vendedor, int quantidade, Acao acao, Corretor corretor, Date data) {
-//        if (vendedor.verificaAcoes(acao, quantidade)) {
-//            return Optional.of(new Negocio(comprador, vendedor, quantidade, acao, corretor, data));
-//    } else {
-//        System.out.println("O vendedor não possui ações suficientes");
-//        return Optional.empty();
-//    }
-//    }
 
     public Date getData() {
         return data;
@@ -129,24 +119,9 @@ public class Negocio {
     public String toString() {
         return "Negocio{" + "id=" + id + ", comprador=" + comprador + ", vendedor=" + vendedor + ", quantidade=" + quantidade + ", acao=" + acao + ", corretor=" + corretor + ", data=" + data + '}';
     }
-    
-     private void atualizarEstoque() {
-        AcaoCliente acaoClienteVendedor = vendedor.getAcaoCliente(this.acao);
-        if (acaoClienteVendedor == null || acaoClienteVendedor.getQuantidade() < quantidade) {
-            throw new IllegalArgumentException("Vendedor não tem ações suficientes para a transação.");
-        }
-        acaoClienteVendedor.setQuantidade(acaoClienteVendedor.getQuantidade() - quantidade);
 
-        AcaoCliente acaoClienteComprador = comprador.getAcaoCliente(this.acao);
-        if (acaoClienteComprador != null) {
-            acaoClienteComprador.setQuantidade(acaoClienteComprador.getQuantidade() + quantidade);
-        } else {
-            acaoClienteComprador = new AcaoCliente(this.acao, comprador, quantidade);
-            comprador.addAcaoCliente(acaoClienteComprador);
-            
-        }
+    private void atualizarEstoque() {
+        vendedor.vender(this.acao, this.quantidade);
+        comprador.comprar(this.acao, this.quantidade);
     }
-
-
-
 }
