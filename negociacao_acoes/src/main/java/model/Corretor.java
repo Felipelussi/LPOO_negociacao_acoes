@@ -12,9 +12,17 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Corretor extends Pessoa{
-    int registroProfissional;
+    private int registroProfissional;
     public Corretor(String nome, String cpf, int registroProfissional) {
         super(nome, cpf);
+        this.registroProfissional = registroProfissional;
+    }
+
+    public int getRegistroProfissional() {
+        return registroProfissional;
+    }
+
+    public void setRegistroProfissional(int registroProfissional) {
         this.registroProfissional = registroProfissional;
     }
 

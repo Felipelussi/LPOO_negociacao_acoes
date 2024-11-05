@@ -15,12 +15,13 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Cliente extends Pessoa{
-    int nConta;
+    private int nConta;
     
     @OneToMany(mappedBy = "id")
-    List<AcaoCliente> acoes;
+    private List<AcaoCliente> acoes;
+    
     @OneToMany(mappedBy = "id")
-    List<Negocio> negocios;
+    private List<Negocio> negocios;
 
     public Cliente(String nome, String cpf, int nConta) {
         super(nome, cpf);
@@ -28,6 +29,60 @@ public class Cliente extends Pessoa{
         this.acoes = new ArrayList<AcaoCliente>();
         this.negocios = new ArrayList<Negocio>();
     }
+
+    public int getnConta() {
+        return nConta;
+    }
+
+    public void setnConta(int nConta) {
+        this.nConta = nConta;
+    }
+
+    public List<AcaoCliente> getAcoes() {
+        return acoes;
+    }
+
+    public void setAcoes(List<AcaoCliente> acoes) {
+        this.acoes = acoes;
+    }
+
+    public List<Negocio> getNegocios() {
+        return negocios;
+    }
+
+    public void setNegocios(List<Negocio> negocios) {
+        this.negocios = negocios;
+    }
     
+    public void addNegocio(Negocio negocio) {
+ 
+    this.negocios.add(negocio);
+    }
     
+    public boolean verificaAcoes(Acao acao, int qtd){
+        
+        System.out.println(acao.getNome());
+        System.out.println("qtd: " + qtd);
+        return true;
+//        if(!this.acoes.contains(acao))
+//          return false;
+//        return this.acoes.get(this.acoes.indexOf(acao)).getQuantidade() >= qtd;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "nConta=" + nConta + ", acoes=" + acoes + ", negocios=" + negocios + '}';
+    }
+    
+        public AcaoCliente getAcaoCliente(Acao acao) {
+        return this.acoes.stream()
+                .filter(acaoCliente -> acaoCliente.getAcao().equals(acao))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void addAcaoCliente(AcaoCliente acaoCliente) {
+        this.acoes.add(acaoCliente);
+    }
+       
 }
