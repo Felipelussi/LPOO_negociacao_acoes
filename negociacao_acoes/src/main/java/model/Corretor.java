@@ -4,14 +4,17 @@
  */
 package model;
 
+import javax.persistence.Entity;
+
 /**
  *
  * @author felipe
  */
+@Entity
 public class Corretor extends Pessoa{
     int registroProfissional;
-    public Corretor(int registroProfissional, int id, String nome, String cpf) {
-        super(id, nome, cpf);
+    public Corretor(String nome, String cpf, int registroProfissional) {
+        super(nome, cpf);
         this.registroProfissional = registroProfissional;
     }
 

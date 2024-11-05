@@ -10,22 +10,38 @@ import model.Cliente;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
  *
  * @author felipe
  */
-//@Entity()
-//@Table(name="negocios")
+@Entity()
+@Table(name="negocios")
 public class Negocio {
-//    @Id
+    @Id
     int id;
+    
+    @ManyToOne()
+    @JoinColumn(name = "comprador_id")
     Cliente comprador;
+    
+    @ManyToOne()
+    @JoinColumn(name = "vendedor_id")
     Cliente vendedor;
+    
     int quantidade;
+    
+    @ManyToOne()
+    @JoinColumn(name = "acao_id")
     Acao acao;
+    
+    @ManyToOne()
+    @JoinColumn(name = "corretor_id")
     Corretor corretor;
+    
     Date data;
     
 }

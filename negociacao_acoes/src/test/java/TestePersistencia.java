@@ -5,6 +5,7 @@
 
 import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
 import model.Acao;
+import model.Cliente;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,8 +36,10 @@ public class TestePersistencia {
     @Test
     public void testePersistencia() {
         Acao a = new Acao(1, "Petrobras", 5.234, "PETR4");
+        Cliente c = new Cliente("felipe", "939731987", 2);
         try {
             jpa.persist(a);
+            jpa.persist(c);
 
         } catch (Exception e) {
             System.out.println("Erro ao persistir model: " + a);
