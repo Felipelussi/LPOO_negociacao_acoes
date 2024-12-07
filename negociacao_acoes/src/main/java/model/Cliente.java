@@ -6,6 +6,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -14,9 +15,10 @@ import javax.persistence.OneToMany;
  * @author felipe
  */
 @Entity
+@DiscriminatorValue("Cliente")
 public class Cliente extends Pessoa {
 
-    private int nConta;
+    private String nConta;
 
     @OneToMany(mappedBy = "id")
     private List<AcaoCliente> acoes;
@@ -24,18 +26,18 @@ public class Cliente extends Pessoa {
     @OneToMany(mappedBy = "id")
     private List<Negocio> negocios;
 
-    public Cliente(String nome, String cpf, int nConta) {
+    public Cliente(String nome, String cpf, String nConta) {
         super(nome, cpf);
         this.nConta = nConta;
         this.acoes = new ArrayList<AcaoCliente>();
         this.negocios = new ArrayList<Negocio>();
     }
 
-    public int getnConta() {
+    public String getnConta() {
         return nConta;
     }
 
-    public void setnConta(int nConta) {
+    public void setnConta(String nConta) {
         this.nConta = nConta;
     }
 

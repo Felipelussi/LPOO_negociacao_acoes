@@ -4,13 +4,16 @@
  */
 package model;
 
+import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 import org.hibernate.annotations.Generated;
 
 /**
@@ -18,7 +21,9 @@ import org.hibernate.annotations.Generated;
  * @author felipe
  */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "pessoas")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_pessoa", discriminatorType = DiscriminatorType.STRING)
 public abstract class Pessoa {
 
     @Id
@@ -31,5 +36,15 @@ public abstract class Pessoa {
         this.nome = nome;
         this.cpf = cpf;
     }
-
+    
+    
+    public void persistir() {
+        try {
+            PersistenciaJPA jpa = new PersistenciaJPA();
+            
+            jpa.persist(this);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao persistir pessoa", e);
+        }
+    }
 }

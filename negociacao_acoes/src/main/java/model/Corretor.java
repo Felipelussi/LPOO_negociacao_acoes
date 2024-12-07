@@ -4,6 +4,7 @@
  */
 package model;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
@@ -11,20 +12,21 @@ import javax.persistence.Entity;
  * @author felipe
  */
 @Entity
+@DiscriminatorValue("Corretor")
 public class Corretor extends Pessoa {
 
-    private int registroProfissional;
+    private String registroProfissional;
 
-    public Corretor(String nome, String cpf, int registroProfissional) {
+    public Corretor(String nome, String cpf, String registroProfissional) {
         super(nome, cpf);
         this.registroProfissional = registroProfissional;
     }
 
-    public int getRegistroProfissional() {
+    public String getRegistroProfissional() {
         return registroProfissional;
     }
 
-    public void setRegistroProfissional(int registroProfissional) {
+    public void setRegistroProfissional(String registroProfissional) {
         this.registroProfissional = registroProfissional;
     }
 

@@ -11,6 +11,8 @@ import model.AcaoCliente;
 import model.Cliente;
 import model.Corretor;
 import model.Negocio;
+import model.Pessoa;
+import model.PessoaFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,12 +42,16 @@ public class TestePersistencia {
     @Test
     public void testePersistencia() {
         Acao petr4 = new Acao(1, "Petrobras", 5.234, "PETR4");
-        Cliente felipe = new Cliente("felipe", "939731987", 2);
-        Cliente fernanda = new Cliente("fernanda", "939731987", 3);
-        Corretor corretor = new Corretor("diego", "32049420249", 12);
+        Cliente felipe = new Cliente("felipe", "939731987", "2");
+        Cliente fernanda = new Cliente("fernanda", "939731987", "3");
+        Corretor corretor = new Corretor("diego", "32049420249", "12");
         AcaoCliente ac = new AcaoCliente(petr4, fernanda, 200);
         AcaoCliente ac1 = new AcaoCliente(petr4, felipe, 200);
         Negocio negocio = new Negocio(felipe, fernanda, 100, petr4, corretor, new Date());
+        
+        PessoaFactory pf = new PessoaFactory();
+        
+        Pessoa test = pf.criarPessoa("test", "30319038198332", null, "321341313313");
 
         try {
             jpa.persist(petr4);
@@ -56,6 +62,7 @@ public class TestePersistencia {
             jpa.persist(corretor);
             jpa.persist(negocio);
             jpa.persist(felipe);
+            jpa.persist(test);
         } catch (Exception e) {
             System.out.println("Erro ao persistir entidades");
             System.out.println(e);
