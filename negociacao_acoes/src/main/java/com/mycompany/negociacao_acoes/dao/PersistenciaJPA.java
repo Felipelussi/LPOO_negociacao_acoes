@@ -4,9 +4,13 @@
  */
 package com.mycompany.negociacao_acoes.dao;
 
+
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import model.Pessoa;
 
 /**
  *
@@ -50,13 +54,27 @@ public class PersistenciaJPA implements InterfaceDB {
         entity = getEntityManager();
         try{
         entity.getTransaction().begin();
-                entity.persist(o);
+        entity.persist(o);
         entity.getTransaction().commit();
         }catch(Exception e){
             if(entity.getTransaction().isActive())
             entity.getTransaction().rollback();
         }
         }
+    
+    public List<Pessoa> getPessoas() {
+        entity = getEntityManager();
+
+        try {
+            TypedQuery<Pessoa> query
+                    = entity.createQuery("Select p from Pessoa p", Pessoa.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            System.err.println("Erro ao buscar Pessoas: " + e);
+            return null;
+        }
+
+    }
 
     @Override
     public void remover(Object o) throws Exception {

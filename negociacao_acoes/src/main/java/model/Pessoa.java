@@ -4,7 +4,6 @@
  */
 package model;
 
-import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -14,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import org.hibernate.annotations.Generated;
+
 
 /**
  *
@@ -37,14 +36,11 @@ public abstract class Pessoa {
         this.cpf = cpf;
     }
     
-    
-    public void persistir() {
-        try {
-            PersistenciaJPA jpa = new PersistenciaJPA();
-            
-            jpa.persist(this);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao persistir pessoa", e);
-        }
+    public Pessoa(){}
+       
+
+    public String getNome(){
+        return this.nome;
     }
+    
 }

@@ -4,17 +4,20 @@
  */
 package views;
 
-/**
- *
- * @author felipe
- */
+import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.Cliente;
+import model.Pessoa;
+
 public class Usuarios extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Usuarios
-     */
+ PersistenciaJPA jpa;
     public Usuarios() {
         initComponents();
+        jpa = new PersistenciaJPA();
+        carregarPessoasCadastradas();
+
     }
 
     /**
@@ -57,6 +60,11 @@ public class Usuarios extends javax.swing.JPanel {
                 "Nome", "Tipo"
             }
         ));
+        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTable1FocusGained(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         jButton2.setText("Novo");
@@ -126,6 +134,25 @@ public class Usuarios extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton2MouseReleased
 
+    private void jTable1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusGained
+        carregarPessoasCadastradas();
+    }//GEN-LAST:event_jTable1FocusGained
+
+    private void carregarPessoasCadastradas(){         
+     
+    DefaultTableModel modeloTabela = (DefaultTableModel) jTable1.getModel();
+    modeloTabela.setRowCount(0); 
+    List<Pessoa> pessoas = jpa.getPessoas();
+    for (Pessoa pessoa : pessoas) {
+        modeloTabela.addRow(new Object[]{
+            pessoa.getNome(),
+            pessoa instanceof Cliente? "Cliente": "Corretor",
+        });
+    }
+
+    jTable1.setModel(modeloTabela);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

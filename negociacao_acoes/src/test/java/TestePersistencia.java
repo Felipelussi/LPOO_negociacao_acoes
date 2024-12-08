@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+
 /**
  *
  * @author felipe
@@ -48,10 +49,11 @@ public class TestePersistencia {
         AcaoCliente ac = new AcaoCliente(petr4, fernanda, 200);
         AcaoCliente ac1 = new AcaoCliente(petr4, felipe, 200);
         Negocio negocio = new Negocio(felipe, fernanda, 100, petr4, corretor, new Date());
-        
+
         PessoaFactory pf = new PessoaFactory();
-        
+
         Pessoa test = pf.criarPessoa("test", "30319038198332", null, "321341313313");
+        Pessoa test2 = pf.criarPessoa("te2st", "30319038198332", null, "321341313313");
 
         try {
             jpa.persist(petr4);
@@ -62,7 +64,8 @@ public class TestePersistencia {
             jpa.persist(corretor);
             jpa.persist(negocio);
             jpa.persist(felipe);
-            jpa.persist(test);
+           
+
         } catch (Exception e) {
             System.out.println("Erro ao persistir entidades");
             System.out.println(e);

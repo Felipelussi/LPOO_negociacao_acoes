@@ -4,10 +4,10 @@
  */
 package views;
 
-import java.awt.TrayIcon;
-import javax.swing.Icon;
-import javax.swing.JDialog;
+import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
 import javax.swing.JOptionPane;
+import model.Pessoa;
+import model.PessoaFactory;
 
 /**
  *
@@ -18,10 +18,13 @@ public class CadastroUsuarios extends javax.swing.JDialog {
     /**
      * Creates new form CadastroUsuarios
      */
+    
+    PersistenciaJPA jpa;
     public CadastroUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         registroProfissionalPanel.setVisible(false);
+        jpa = new PersistenciaJPA();
     }
 
     /**
@@ -51,6 +54,11 @@ public class CadastroUsuarios extends javax.swing.JDialog {
         jLabel2.setText("CPF:");
 
         jButton1.setText("Cancelar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton1MouseReleased(evt);
+            }
+        });
 
         jButton2.setText("Salvar");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -174,10 +182,22 @@ public class CadastroUsuarios extends javax.swing.JDialog {
             return;
         }
         
-            
+        Pessoa nova = PessoaFactory.criarPessoa(nome, cpf, nome, registro);
         
-                
+        try{
+        jpa.persist(nova);
+        }catch(Exception e)
+        {
+            throw new Error(e.getMessage());
+        }
+                    dispose();
+
     }//GEN-LAST:event_jButton2MouseReleased
+
+    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
+            dispose();
+           
+    }//GEN-LAST:event_jButton1MouseReleased
 
     /**
      * @param args the command line arguments

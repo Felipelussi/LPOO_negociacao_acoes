@@ -22,6 +22,9 @@ public class Corretor extends Pessoa {
         this.registroProfissional = registroProfissional;
     }
 
+    public Corretor(){
+        super();
+    }
     public String getRegistroProfissional() {
         return registroProfissional;
     }
