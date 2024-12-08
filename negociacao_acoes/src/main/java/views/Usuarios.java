@@ -12,12 +12,14 @@ import model.Pessoa;
 
 public class Usuarios extends javax.swing.JPanel {
 
- PersistenciaJPA jpa;
+        List<Pessoa> pessoas;
+        PersistenciaJPA jpa;
     public Usuarios() {
         initComponents();
         jpa = new PersistenciaJPA();
+        pessoas = jpa.getPessoas();
         carregarPessoasCadastradas();
-
+         
     }
 
     /**
@@ -30,26 +32,26 @@ public class Usuarios extends javax.swing.JPanel {
     private void initComponents() {
 
         jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnUserInfo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        tblUser = new javax.swing.JTable();
+        btnNovo = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setText("Informações do usuário");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnUserInfo.setText("Informações do usuário");
+        btnUserInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnUserInfoActionPerformed(evt);
             }
         });
 
         jLabel1.setText("Lista de usuários");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -60,26 +62,31 @@ public class Usuarios extends javax.swing.JPanel {
                 "Nome", "Tipo"
             }
         ));
-        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
+        tblUser.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTable1FocusGained(evt);
+                tblUserFocusGained(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tblUser);
 
-        jButton2.setText("Novo");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnNovo.setText("Novo");
+        btnNovo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton2MouseReleased(evt);
+                btnNovoMouseReleased(evt);
             }
         });
 
-        jButton3.setText("Delete");
+        btnDelete.setText("Delete");
+        btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseReleased(evt);
+            }
+        });
 
-        jButton4.setText("Editar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setText("Editar");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
@@ -90,15 +97,15 @@ public class Usuarios extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUserInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(62, 62, 62)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -109,59 +116,72 @@ public class Usuarios extends javax.swing.JPanel {
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUserInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnUserInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserInfoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnUserInfoActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+                     CadastroUsuarios telaCadastro
+                = new CadastroUsuarios(null, true);
+       
+        System.out.println(pessoas.get(tblUser.getSelectedRow()));
+        telaCadastro.setPessoa(pessoas.get(tblUser.getSelectedRow()));
+         telaCadastro.setVisible(true);
+    }//GEN-LAST:event_btnEditActionPerformed
 
-    private void jButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseReleased
+    private void btnNovoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoMouseReleased
               CadastroUsuarios telaCadastro
                 = new CadastroUsuarios(null, true);
         telaCadastro.setVisible(true);
 
-    }//GEN-LAST:event_jButton2MouseReleased
+    }//GEN-LAST:event_btnNovoMouseReleased
 
-    private void jTable1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusGained
+    private void tblUserFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tblUserFocusGained
         carregarPessoasCadastradas();
-    }//GEN-LAST:event_jTable1FocusGained
+    }//GEN-LAST:event_tblUserFocusGained
+
+    private void btnDeleteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseReleased
+     try{
+        jpa.remover(pessoas.get(tblUser.getSelectedRow()));
+     }catch(Exception e){}
+     
+     carregarPessoasCadastradas();
+    }//GEN-LAST:event_btnDeleteMouseReleased
 
     private void carregarPessoasCadastradas(){         
-     
-    DefaultTableModel modeloTabela = (DefaultTableModel) jTable1.getModel();
+      pessoas = jpa.getPessoas();
+    DefaultTableModel modeloTabela = (DefaultTableModel) tblUser.getModel();
     modeloTabela.setRowCount(0); 
-    List<Pessoa> pessoas = jpa.getPessoas();
-    for (Pessoa pessoa : pessoas) {
+  
+    for (Pessoa pessoa : this.pessoas) {
         modeloTabela.addRow(new Object[]{
             pessoa.getNome(),
             pessoa instanceof Cliente? "Cliente": "Corretor",
         });
     }
 
-    jTable1.setModel(modeloTabela);
+    tblUser.setModel(modeloTabela);
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnUserInfo;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblUser;
     // End of variables declaration//GEN-END:variables
 }

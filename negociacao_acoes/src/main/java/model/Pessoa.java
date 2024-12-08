@@ -43,4 +43,13 @@ public abstract class Pessoa {
         return this.nome;
     }
     
+    public String getCpf(){
+        return this.cpf;
+    }
+    
+    @Override
+    public String toString(){
+        return this.nome;
+    }
+    
 }

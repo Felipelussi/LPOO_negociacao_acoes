@@ -6,6 +6,8 @@ package views;
 
 import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
 import javax.swing.JOptionPane;
+import model.Cliente;
+import model.Corretor;
 import model.Pessoa;
 import model.PessoaFactory;
 
@@ -15,9 +17,8 @@ import model.PessoaFactory;
  */
 public class CadastroUsuarios extends javax.swing.JDialog {
 
-    /**
-     * Creates new form CadastroUsuarios
-     */
+    
+ 
     
     PersistenciaJPA jpa;
     public CadastroUsuarios(java.awt.Frame parent, boolean modal) {
@@ -199,6 +200,22 @@ public class CadastroUsuarios extends javax.swing.JDialog {
            
     }//GEN-LAST:event_jButton1MouseReleased
 
+     public void setPessoa(Pessoa pessoa) {
+        nomeTxtField.setText(pessoa.getNome());
+        cpfTxtField.setText(pessoa.getCpf());
+            System.out.println("test");
+         System.out.println(pessoa.getNome());
+        if(pessoa instanceof Corretor)
+        {
+            Corretor corretor = (Corretor) pessoa;
+            registroProfissionalPanel.setVisible(true);
+            jCheckBox1.setSelected(true);
+            registroTxtField.setText(corretor.getRegistroProfissional());
+        }else{ 
+            Cliente cliente = (Cliente) pessoa;
+        }
+     
+    }
     /**
      * @param args the command line arguments
      */
