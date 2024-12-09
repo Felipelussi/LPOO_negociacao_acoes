@@ -139,7 +139,7 @@ public class Acoes extends javax.swing.JPanel {
     
     
     
-    private void carregarAcoes(){
+    public void carregarAcoes(){
                 try {
             // Busca todas as entidades do tipo Acao
             List<Acao> acoes = (List<Acao>) jpa.findAll(Acao.class);

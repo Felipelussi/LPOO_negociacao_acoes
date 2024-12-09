@@ -4,7 +4,6 @@
  */
 package model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
@@ -16,7 +15,7 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("Corretor")
 public class Corretor extends Pessoa {
 
-    @Column
+
      String registroProfissional;
 
     public Corretor(String nome, String cpf, String registroProfissional) {
@@ -35,6 +34,12 @@ public class Corretor extends Pessoa {
         this.registroProfissional = registroProfissional;
     }
     
+    
+    @Override
+    public String toString(){
+      Pessoa corretor = (Pessoa) this;
+      return corretor.getNome();
+    }
   
 
 }

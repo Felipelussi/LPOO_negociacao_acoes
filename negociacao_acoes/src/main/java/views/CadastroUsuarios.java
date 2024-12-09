@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import model.Cliente;
 import model.Corretor;
 import model.Pessoa;
-import model.PessoaFactory;
 
 /**
  *
@@ -23,7 +22,7 @@ public class CadastroUsuarios extends javax.swing.JDialog {
   boolean edicao = false;
     public  CadastroUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-          jpa = new  PersistenciaJPA();
+          jpa = new  PersistenciaJPA();        
           pessoa = new Cliente();
          initComponents();
         registroProfissionalPanel.setVisible(false);
@@ -197,8 +196,9 @@ public class CadastroUsuarios extends javax.swing.JDialog {
         
           if(eCorretor)
           {
-          pessoa = (Corretor) pessoa;
-           ((Corretor) pessoa).setRegistroProfissional(registro);
+              ((Corretor) pessoa).setRegistroProfissional(registro);
+//          pessoa = (Corretor) pessoa;;
+           
           }    
           pessoa.setCpf(cpf);
           pessoa.setNome(nome);       

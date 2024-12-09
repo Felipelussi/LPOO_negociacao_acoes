@@ -5,10 +5,14 @@
 package views;
 
 import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Acao;
+import model.Cliente;
 import model.ComboBoxHelper;
+import model.Corretor;
+import model.Pessoa;
 
 /**
  *
@@ -19,22 +23,18 @@ public class Negocios extends javax.swing.JPanel {
     /**
      * Creates new form Negocios
      */
-    
     PersistenciaJPA jpa;
+
     public Negocios(PersistenciaJPA jpa) {
-      
+
         this.jpa = jpa;
-                 initComponents();
-         carregarAcoes();
- 
-         
-    }
-    
-    public Negocios(){
-          initComponents();
+        initComponents();
         carregarAcoes();
-      
+        carregarParticipantes();
+
     }
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,13 +61,7 @@ public class Negocios extends javax.swing.JPanel {
 
         jLabel2.setText("Comprador");
 
-        cmbVendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbComprador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel3.setText("Corretor");
-
-        cmbCorretor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel4.setText("Acao");
 
@@ -153,24 +147,38 @@ public class Negocios extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtPrecoActionPerformed
 
-    private void carregarAcoes() {
-    try {
-        List<Acao> acoes = (List<Acao>) jpa.findAll(Acao.class); 
-        System.out.println(acoes);
-        ComboBoxHelper.preencherComboBox(cmbAcao, acoes);
-        cmbAcao.repaint();
-    } catch (Exception e) {
+    public void carregarAcoes() {
+        try {
+            List<Acao> acoes = (List<Acao>) jpa.findAll(Acao.class);
+            System.out.println(acoes);
+            ComboBoxHelper.preencherComboBox(cmbAcao, acoes);
+
+        } catch (Exception e) {
+        }
     }
-}
+
+    public void carregarParticipantes() {
+
+        try {
+            List<Pessoa> cliente = (List<Pessoa>) jpa.findAll(Cliente.class);
+            List<Pessoa> corretor = (List<Pessoa>) jpa.findAll(Corretor.class);
+
+            ComboBoxHelper.preencherComboBox(cmbComprador, cliente);
+            ComboBoxHelper.preencherComboBox(cmbVendedor, cliente);
+            ComboBoxHelper.preencherComboBox(cmbCorretor, corretor);
+
+        } catch (Exception e) {
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Acao> cmbAcao;
-    private javax.swing.JComboBox<String> cmbComprador;
-    private javax.swing.JComboBox<String> cmbCorretor;
-    private javax.swing.JComboBox<String> cmbVendedor;
+    private javax.swing.JComboBox<Pessoa> cmbComprador;
+    private javax.swing.JComboBox<Pessoa> cmbCorretor;
+    private javax.swing.JComboBox<Pessoa> cmbVendedor;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

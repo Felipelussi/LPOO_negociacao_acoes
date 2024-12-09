@@ -37,8 +37,25 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        pnlAcoes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                pnlAcoesMouseReleased(evt);
+            }
+        });
+
+        usuarios.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                usuariosFocusGained(evt);
+            }
+        });
         pnlAcoes.addTab("Usuários", usuarios);
         pnlAcoes.addTab("Acoes", acoes1);
+
+        negocios1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                negocios1MouseReleased(evt);
+            }
+        });
         pnlAcoes.addTab("Negocios", negocios1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -56,6 +73,19 @@ public class Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void pnlAcoesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlAcoesMouseReleased
+       acoes1.carregarAcoes();
+    }//GEN-LAST:event_pnlAcoesMouseReleased
+
+    private void usuariosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usuariosFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usuariosFocusGained
+
+    private void negocios1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_negocios1MouseReleased
+       negocios1.carregarAcoes();
+       negocios1.carregarParticipantes();
+    }//GEN-LAST:event_negocios1MouseReleased
 
     /**
      * @param args the command line arguments

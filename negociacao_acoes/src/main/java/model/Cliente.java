@@ -4,7 +4,7 @@
  */
 package model;
 
-import jakarta.persistence.Column;
+
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.DiscriminatorValue;
@@ -16,7 +16,7 @@ import jakarta.persistence.OneToMany;
 @DiscriminatorValue("Cliente")
 public class Cliente extends Pessoa {
 
-    @Column
+
     private String nConta;
 
     @OneToMany(mappedBy = "id")
@@ -88,7 +88,8 @@ public class Cliente extends Pessoa {
 
     @Override
     public String toString() {
-        return "Cliente{" + "nConta=" + nConta + ", acoes=" + acoes + ", negocios=" + negocios + '}';
+        Pessoa cliente = (Pessoa) this;
+        return cliente.getNome();
     }
 
     public AcaoCliente getAcaoCliente(Acao acao) {

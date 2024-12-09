@@ -15,11 +15,9 @@ public class PersistenciaJPA implements InterfaceDB {
     private final EntityManagerFactory factory;
 
     public PersistenciaJPA() {
-        // Inicializa o EntityManagerFactory com a unidade de persistência definida no persistence.xml
         factory = Persistence.createEntityManagerFactory("negociacao_acoes");
     }
 
-    // Método utilitário para executar operações dentro de uma transação
     private void inTransaction(Consumer<EntityManager> work) {
         EntityManager entityManager = factory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -31,7 +29,7 @@ public class PersistenciaJPA implements InterfaceDB {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw e; // Repropaga a exceção para tratamento externo, se necessário
+            throw e; 
         } finally {
             entityManager.close();
         }
@@ -58,7 +56,8 @@ public class PersistenciaJPA implements InterfaceDB {
      public List<?> findAll(Class c) throws Exception {
         EntityManager em = factory.createEntityManager();
         try {
-            String query = "SELECT e FROM " + c.getSimpleName() + " e"; // JPQL query
+            String query = "SELECT e FROM " + c.getSimpleName() + " e";
+            System.out.println(c.getSimpleName());
             return em.createQuery(query, c).getResultList();
         } finally {
             em.close();
@@ -73,16 +72,15 @@ public class PersistenciaJPA implements InterfaceDB {
     @Override
     public void remover(Object o) throws Exception {
         inTransaction(entityManager -> {
-            Object objeto = o; // Copia o valor de 'o' para uma variável local
+            Object objeto = o; 
             if (!entityManager.contains(objeto)) {
-                objeto = entityManager.merge(objeto); // Atualiza a referência dentro do lambda
+                objeto = entityManager.merge(objeto); 
             }
             entityManager.remove(objeto);
         });
 }
 
 
-    // Método para listar todas as Pessoas
     public List<Pessoa> getPessoas() {
         EntityManager entityManager = factory.createEntityManager();
         try {

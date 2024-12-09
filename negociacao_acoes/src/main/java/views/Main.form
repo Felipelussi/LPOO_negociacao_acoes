@@ -37,10 +37,16 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JTabbedPane" name="pnlAcoes">
+      <Events>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlAcoesMouseReleased"/>
+      </Events>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
         <Component class="views.Usuarios" name="usuarios">
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="usuariosFocusGained"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new views.Usuarios(jpa)"/>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="Main_usuarios"/>
@@ -68,6 +74,9 @@
           </Constraints>
         </Component>
         <Component class="views.Negocios" name="negocios1">
+          <Events>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="negocios1MouseReleased"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new views.Negocios(jpa)"/>
           </AuxValues>

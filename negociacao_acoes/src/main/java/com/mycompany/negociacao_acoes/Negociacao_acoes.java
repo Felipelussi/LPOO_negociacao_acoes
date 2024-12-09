@@ -4,12 +4,6 @@
 
 package com.mycompany.negociacao_acoes;
 
-import java.util.Date;
-import model.Acao;
-import model.AcaoCliente;
-import model.Cliente;
-import model.Corretor;
-import model.Negocio;
 
 /**
  *
@@ -32,10 +26,6 @@ public class Negociacao_acoes{
     }
 
     public void persistirDados() {
-
-        Cliente c = new Cliente("felipe", "939731987", "2");
-        Cliente fer = new Cliente("fernanda", "939731987", "3");
-        Corretor co = new Corretor("diego", "32049420249", "12");
 
 
         try {
