@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package views;
+import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
 import views.Usuarios;
 /**
  *
@@ -13,9 +14,12 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    PersistenciaJPA jpa;
     public Main() {
+        jpa = new PersistenciaJPA();
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,11 +31,11 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        usuarios2 = new views.Usuarios();
+        views.Usuarios usuarios = new views.Usuarios(jpa);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane1.addTab("Usuários", usuarios2);
+        jTabbedPane1.addTab("Usuários", usuarios);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,6 +90,5 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane jTabbedPane1;
-    private views.Usuarios usuarios2;
     // End of variables declaration//GEN-END:variables
 }

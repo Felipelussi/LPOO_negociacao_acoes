@@ -6,23 +6,15 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
-/**
- *
- * @author felipe
- */
+
 @Entity
 @DiscriminatorValue("Cliente")
 public class Cliente extends Pessoa {
 
-    @Column()
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String nConta;
 
     @OneToMany(mappedBy = "id")
@@ -34,8 +26,8 @@ public class Cliente extends Pessoa {
     public Cliente(String nome, String cpf, String nConta) {
         super(nome, cpf);
         this.nConta = nConta;
-        this.acoes = new ArrayList<AcaoCliente>();
-        this.negocios = new ArrayList<Negocio>();
+        this.acoes = new ArrayList<>();
+        this.negocios = new ArrayList<>();
     }
     
     public Cliente(){

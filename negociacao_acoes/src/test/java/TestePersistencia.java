@@ -5,7 +5,6 @@
 
 import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
 import java.util.Date;
-import java.util.Optional;
 import model.Acao;
 import model.AcaoCliente;
 import model.Cliente;

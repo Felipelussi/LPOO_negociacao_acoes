@@ -14,12 +14,16 @@ public class Usuarios extends javax.swing.JPanel {
 
         List<Pessoa> pessoas;
         PersistenciaJPA jpa;
-    public Usuarios() {
-        initComponents();
-        jpa = new PersistenciaJPA();
-        pessoas = jpa.getPessoas();
+    public Usuarios(PersistenciaJPA jpa) {
+      
+        this.jpa = jpa;
+         initComponents();
         carregarPessoasCadastradas();
          
+    }
+    
+    public Usuarios(){
+        initComponents();
     }
 
     /**
@@ -134,8 +138,8 @@ public class Usuarios extends javax.swing.JPanel {
                      CadastroUsuarios telaCadastro
                 = new CadastroUsuarios(null, true);
        
-        System.out.println(pessoas.get(tblUser.getSelectedRow()));
-        telaCadastro.setPessoa(pessoas.get(tblUser.getSelectedRow()));
+//        System.out.println(pessoas.get(tblUser.getSelectedRow()));
+//        telaCadastro.setPessoa(pessoas.get(tblUser.getSelectedRow()));
          telaCadastro.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -171,7 +175,6 @@ public class Usuarios extends javax.swing.JPanel {
     }
 
     tblUser.setModel(modeloTabela);
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

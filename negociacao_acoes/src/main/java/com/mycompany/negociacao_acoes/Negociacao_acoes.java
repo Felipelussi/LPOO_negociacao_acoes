@@ -4,7 +4,6 @@
 
 package com.mycompany.negociacao_acoes;
 
-import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
 import java.util.Date;
 import model.Acao;
 import model.AcaoCliente;
@@ -18,18 +17,18 @@ import model.Negocio;
  */
 public class Negociacao_acoes{
     
-     private PersistenciaJPA jpa;
+//     private PersistenciaJPA jpa;
 
     public Negociacao_acoes() {
-        this.jpa = new PersistenciaJPA();
+//        this.jpa = new PersistenciaJPA();
     }
 
     public void iniciarConexao() {
-        jpa.conexaoAberta();
+//        jpa.conexaoAberta();
     }
 
     public void fecharConexao() {
-        jpa.fecharConexao();
+//        jpa.fecharConexao();
     }
 
     public void persistirDados() {
@@ -40,11 +39,11 @@ public class Negociacao_acoes{
         AcaoCliente ac = new AcaoCliente(a, fer, 100);
 
         try {
-            jpa.persist(a);
-            jpa.persist(c);
-            jpa.persist(fer);
-            jpa.persist(co);
-            jpa.persist(ac);
+//            jpa.persist(a);
+//            jpa.persist(c);
+//            jpa.persist(fer);
+//            jpa.persist(co);
+//            jpa.persist(ac);
             System.out.println("Dados persistidos com sucesso.");
         } catch (Exception e) {
             System.out.println("Erro ao persistir dados: " + e.getMessage());

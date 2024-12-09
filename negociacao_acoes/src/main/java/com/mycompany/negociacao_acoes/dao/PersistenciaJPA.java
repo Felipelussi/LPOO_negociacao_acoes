@@ -1,97 +1,88 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.negociacao_acoes.dao;
 
-
+import com.mycompany.negociacao_acoes.dao.InterfaceDB;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import java.util.function.Consumer;
 import model.Pessoa;
 
-/**
- *
- * @author felipe
- */
 public class PersistenciaJPA implements InterfaceDB {
 
-    public EntityManager entity;
-    public EntityManagerFactory factory;
+    private final EntityManagerFactory factory;
 
     public PersistenciaJPA() {
+        // Inicializa o EntityManagerFactory com a unidade de persistência definida no persistence.xml
         factory = Persistence.createEntityManagerFactory("negociacao_acoes");
-        entity = factory.createEntityManager();
     }
 
-    public EntityManager getEntityManager() {
-        if (entity == null || !entity.isOpen()) {
-            entity = factory.createEntityManager();
+    // Método utilitário para executar operações dentro de uma transação
+    private void inTransaction(Consumer<EntityManager> work) {
+        EntityManager entityManager = factory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            work.accept(entityManager);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw e; // Repropaga a exceção para tratamento externo, se necessário
+        } finally {
+            entityManager.close();
         }
-        return entity;
     }
 
     @Override
     public Boolean conexaoAberta() {
-
-        return entity.isOpen();
+        return factory.isOpen();
     }
 
     @Override
     public void fecharConexao() {
-        entity.close();
+        if (factory.isOpen()) {
+            factory.close();
+        }
     }
 
     @Override
     public Object find(Class c, Object id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return factory.createEntityManager().find(c, id);
     }
 
     @Override
     public void persist(Object o) throws Exception {
-        entity = getEntityManager();
-        try{
-        entity.getTransaction().begin();
-        entity.persist(o);
-        entity.getTransaction().commit();
-        }catch(Exception e){
-            if(entity.getTransaction().isActive())
-            entity.getTransaction().rollback();
-        }
-        }
-    
-    public List<Pessoa> getPessoas() {
-        entity = getEntityManager();
+        // Usando inTransaction para gerenciar transações
+        inTransaction(entityManager -> entityManager.persist(o));
+    }
 
+    @Override
+    public void remover(Object o) throws Exception {
+        inTransaction(entityManager -> {
+            Object objeto = o; // Copia o valor de 'o' para uma variável local
+            if (!entityManager.contains(objeto)) {
+                objeto = entityManager.merge(objeto); // Atualiza a referência dentro do lambda
+            }
+            entityManager.remove(objeto);
+        });
+}
+
+
+    // Método para listar todas as Pessoas
+    public List<Pessoa> getPessoas() {
+        EntityManager entityManager = factory.createEntityManager();
         try {
-            TypedQuery<Pessoa> query
-                    = entity.createQuery("Select p from Pessoa p", Pessoa.class);
+            TypedQuery<Pessoa> query = entityManager.createQuery("SELECT p FROM Pessoa p", Pessoa.class);
             return query.getResultList();
         } catch (Exception e) {
             System.err.println("Erro ao buscar Pessoas: " + e);
             return null;
+        } finally {
+            entityManager.close();
         }
-
     }
-    
-    @Override
-    public void remover(Object o) throws Exception {
-        entity = getEntityManager();
-        try{
-        entity.getTransaction().begin();
-        entity.remove(o);
-        entity.getTransaction().commit();
-        }catch(Exception e){
-            if(entity.getTransaction().isActive())
-            entity.getTransaction().rollback();
-        }
-        }
-
-//    @Override
-//    public void remover(Object o) throws Exception {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//    }
-
 }
