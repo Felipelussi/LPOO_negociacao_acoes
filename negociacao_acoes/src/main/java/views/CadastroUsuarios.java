@@ -17,17 +17,20 @@ import model.PessoaFactory;
  */
 public class CadastroUsuarios extends javax.swing.JDialog {
 
-    
- 
-    
-    PersistenciaJPA jpa;
-    public CadastroUsuarios(java.awt.Frame parent, boolean modal) {
+
+  PersistenciaJPA jpa;
+  Pessoa pessoa;
+  boolean edicao = false;
+    public  CadastroUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
+          jpa = new  PersistenciaJPA();
+          pessoa = new Cliente();
+         initComponents();
         registroProfissionalPanel.setVisible(false);
-        jpa = new PersistenciaJPA();
+        
     }
 
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -151,7 +154,7 @@ public class CadastroUsuarios extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-            registroProfissionalPanel.setVisible(!registroProfissionalPanel.isVisible());
+        registroProfissionalPanel.setVisible(!registroProfissionalPanel.isVisible());
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void registroTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroTxtFieldActionPerformed
@@ -159,63 +162,84 @@ public class CadastroUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_registroTxtFieldActionPerformed
 
     private void jButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseReleased
+
+       
+
+        boolean eCorretor = jCheckBox1.isSelected();      
+                                
         String nome = nomeTxtField.getText();
+        
         String cpf = cpfTxtField.getText();
         String registro = registroTxtField.getText();
-        
+
         String regexNome = "^[a-zA-ZáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛãõÃÕçÇ ]+$";
         String regexCpf = "^\\d{11}$";
-        
+
         StringBuilder sb = new StringBuilder("");
-                        
-        if(!nome.matches(regexNome))
+
+        if (!nome.matches(regexNome)) {
             sb.append("Nome não pode ser vazio\n");
-        
-        if(!cpf.matches(regexCpf))
+        }
+
+        if (!cpf.matches(regexCpf)) {
             sb.append("CPF deve conter apenas 11 números\n");
-        
-        if(jCheckBox1.isSelected() && !registro.matches(regexCpf))
+        }
+
+        if(eCorretor && !registro.matches(regexCpf)){
             sb.append("Registro profissional deve conter apenas 11 números");
-        
+        }
+
         if(!sb.isEmpty())
         {
             JOptionPane.showMessageDialog(null, sb, "Nome inválido", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        Pessoa nova = PessoaFactory.criarPessoa(nome, cpf, nome, registro);
+          if(eCorretor)
+          {
+          pessoa = (Corretor) pessoa;
+           ((Corretor) pessoa).setRegistroProfissional(registro);
+          }    
+          pessoa.setCpf(cpf);
+          pessoa.setNome(nome);       
         
-        try{
-        jpa.persist(nova);
-        }catch(Exception e)
-        {
+        try {
+            jpa.persist(pessoa);
+        } catch (Exception e) {
             throw new Error(e.getMessage());
         }
-                    dispose();
+        dispose();
 
     }//GEN-LAST:event_jButton2MouseReleased
 
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
-            dispose();
-           
+        dispose();
+
     }//GEN-LAST:event_jButton1MouseReleased
 
-     public void setPessoa(Pessoa pessoa) {
+    public void setPessoa(Pessoa pessoa) {
+        edicao = true;
+        
+        if(pessoa instanceof Corretor)
+            this.pessoa = (Corretor) pessoa; 
+        
+        this.pessoa = pessoa;
+        
         nomeTxtField.setText(pessoa.getNome());
         cpfTxtField.setText(pessoa.getCpf());
-            System.out.println("test");
-         System.out.println(pessoa.getNome());
-        if(pessoa instanceof Corretor)
-        {
+        System.out.println("test");
+        System.out.println(pessoa.getNome());
+        if (pessoa instanceof Corretor) {
             Corretor corretor = (Corretor) pessoa;
             registroProfissionalPanel.setVisible(true);
             jCheckBox1.setSelected(true);
             registroTxtField.setText(corretor.getRegistroProfissional());
-        }else{ 
+        } else {
             Cliente cliente = (Cliente) pessoa;
         }
-     
+
     }
+
     /**
      * @param args the command line arguments
      */

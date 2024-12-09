@@ -54,6 +54,16 @@ public class PersistenciaJPA implements InterfaceDB {
         return factory.createEntityManager().find(c, id);
     }
 
+    
+     public List<?> findAll(Class c) throws Exception {
+        EntityManager em = factory.createEntityManager();
+        try {
+            String query = "SELECT e FROM " + c.getSimpleName() + " e"; // JPQL query
+            return em.createQuery(query, c).getResultList();
+        } finally {
+            em.close();
+        }}
+    
     @Override
     public void persist(Object o) throws Exception {
         // Usando inTransaction para gerenciar transações

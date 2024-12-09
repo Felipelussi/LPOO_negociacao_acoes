@@ -4,6 +4,7 @@
  */
 package model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
@@ -28,8 +29,14 @@ public abstract class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     int id;
-    String nome;
-    String cpf;
+    
+    @Column
+    private String nome;
+    
+    @Column
+    private String cpf;
+    
+   
 
     public Pessoa(String nome, String cpf) {
         this.nome = nome;
@@ -51,5 +58,15 @@ public abstract class Pessoa {
     public String toString(){
         return this.nome;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+  
     
 }

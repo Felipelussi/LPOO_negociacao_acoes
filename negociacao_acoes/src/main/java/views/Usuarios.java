@@ -138,8 +138,7 @@ public class Usuarios extends javax.swing.JPanel {
                      CadastroUsuarios telaCadastro
                 = new CadastroUsuarios(null, true);
        
-//        System.out.println(pessoas.get(tblUser.getSelectedRow()));
-//        telaCadastro.setPessoa(pessoas.get(tblUser.getSelectedRow()));
+        telaCadastro.setPessoa(pessoas.get(tblUser.getSelectedRow()));
          telaCadastro.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -164,7 +163,7 @@ public class Usuarios extends javax.swing.JPanel {
 
     private void carregarPessoasCadastradas(){         
       pessoas = jpa.getPessoas();
-    DefaultTableModel modeloTabela = (DefaultTableModel) tblUser.getModel();
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblUser.getModel();
     modeloTabela.setRowCount(0); 
   
     for (Pessoa pessoa : this.pessoas) {

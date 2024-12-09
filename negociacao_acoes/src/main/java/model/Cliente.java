@@ -4,6 +4,7 @@
  */
 package model;
 
+import jakarta.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.DiscriminatorValue;
@@ -15,6 +16,7 @@ import jakarta.persistence.OneToMany;
 @DiscriminatorValue("Cliente")
 public class Cliente extends Pessoa {
 
+    @Column
     private String nConta;
 
     @OneToMany(mappedBy = "id")
