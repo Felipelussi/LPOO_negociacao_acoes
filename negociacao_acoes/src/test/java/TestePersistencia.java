@@ -41,7 +41,7 @@ public class TestePersistencia {
 
     @Test
     public void testePersistencia() {
-        Acao petr4 = new Acao(1, "Petrobras", 5.234, "PETR4");
+        Acao petr4 = new Acao("Petrobras", 5.234, "PETR4");
         Cliente felipe = new Cliente("felipe", "939731987", "2");
         Cliente fernanda = new Cliente("fernanda", "939731987", "3");
         Corretor corretor = new Corretor("diego", "32049420249", "12");

@@ -33,11 +33,13 @@ public class Main extends javax.swing.JFrame {
         pnlAcoes = new javax.swing.JTabbedPane();
         views.Usuarios usuarios = new views.Usuarios(jpa);
         acoes1 = new views.Acoes(jpa);
+        negocios1 = new views.Negocios(jpa);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pnlAcoes.addTab("Usuários", usuarios);
         pnlAcoes.addTab("Acoes", acoes1);
+        pnlAcoes.addTab("Negocios", negocios1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,6 +94,7 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private views.Acoes acoes1;
+    private views.Negocios negocios1;
     private javax.swing.JTabbedPane pnlAcoes;
     // End of variables declaration//GEN-END:variables
 }

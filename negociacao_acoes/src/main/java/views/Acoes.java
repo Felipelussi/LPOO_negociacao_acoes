@@ -28,14 +28,16 @@ public class Acoes extends javax.swing.JPanel {
     public Acoes(PersistenciaJPA jpa) {
       
         this.jpa = jpa;
-         initComponents();
+               initComponents();
          carregarAcoes();
+   
          
     }
     
     public Acoes(){
-        initComponents();
+        initComponents(); 
         carregarAcoes();
+       
     }
     /**
      * This method is called from within the constructor to initialize the form.

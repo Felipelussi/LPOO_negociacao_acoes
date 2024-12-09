@@ -5,6 +5,8 @@
 package model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -16,10 +18,10 @@ import jakarta.persistence.Table;
 @Table(name="acoes")
 public class Acao {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    public Acao(int id, String nome, Double preco, String sigla) {
-        this.id = id;
+    public Acao(String nome, Double preco, String sigla) {
         this.nome = nome;
         this.preco = preco;
         this.sigla = sigla;
@@ -64,7 +66,7 @@ public class Acao {
 
     @Override
     public String toString() {
-        return "Acao{" + "id=" + id + ", nome=" + nome + ", preco=" + preco + ", sigla=" + sigla + '}';
+        return sigla;
     }
     
 }

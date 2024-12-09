@@ -4,6 +4,12 @@
  */
 package views;
 
+import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
+import java.util.List;
+import javax.swing.JOptionPane;
+import model.Acao;
+import model.ComboBoxHelper;
+
 /**
  *
  * @author felipe
@@ -13,10 +19,22 @@ public class Negocios extends javax.swing.JPanel {
     /**
      * Creates new form Negocios
      */
-    public Negocios() {
-        initComponents();
+    
+    PersistenciaJPA jpa;
+    public Negocios(PersistenciaJPA jpa) {
+      
+        this.jpa = jpa;
+                 initComponents();
+         carregarAcoes();
+ 
+         
     }
-
+    
+    public Negocios(){
+          initComponents();
+        carregarAcoes();
+      
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,8 +70,6 @@ public class Negocios extends javax.swing.JPanel {
         cmbCorretor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel4.setText("Acao");
-
-        cmbAcao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel5.setText("Preço");
 
@@ -140,9 +156,18 @@ public class Negocios extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecoActionPerformed
 
+    private void carregarAcoes() {
+    try {
+        List<Acao> acoes = (List<Acao>) jpa.findAll(Acao.class); 
+        System.out.println(acoes);
+        ComboBoxHelper.preencherComboBox(cmbAcao, acoes);
+        cmbAcao.repaint();
+    } catch (Exception e) {
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cmbAcao;
+    private javax.swing.JComboBox<Acao> cmbAcao;
     private javax.swing.JComboBox<String> cmbComprador;
     private javax.swing.JComboBox<String> cmbCorretor;
     private javax.swing.JComboBox<String> cmbVendedor;

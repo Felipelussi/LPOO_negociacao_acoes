@@ -32,11 +32,11 @@ public class Negociacao_acoes{
     }
 
     public void persistirDados() {
-        Acao a = new Acao(1, "Petrobras", 5.234, "PETR4");
+
         Cliente c = new Cliente("felipe", "939731987", "2");
         Cliente fer = new Cliente("fernanda", "939731987", "3");
         Corretor co = new Corretor("diego", "32049420249", "12");
-        AcaoCliente ac = new AcaoCliente(a, fer, 100);
+
 
         try {
 //            jpa.persist(a);
