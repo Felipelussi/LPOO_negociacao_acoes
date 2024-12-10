@@ -1,10 +1,9 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/Application.java to edit this template
  */
 package views;
-import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
-import views.Usuarios;
+
 /**
  *
  * @author felipe
@@ -14,12 +13,9 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    PersistenciaJPA jpa;
     public Main() {
-        jpa = new PersistenciaJPA();
         initComponents();
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,62 +26,133 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlAcoes = new javax.swing.JTabbedPane();
-        views.Usuarios usuarios = new views.Usuarios(jpa);
-        acoes1 = new views.Acoes(jpa);
-        negocios1 = new views.Negocios(jpa);
+        menuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        negociacao = new javax.swing.JMenuItem();
+        Pessoas = new javax.swing.JMenuItem();
+        Acoes = new javax.swing.JMenuItem();
+        exitMenuItem = new javax.swing.JMenuItem();
+        editMenu = new javax.swing.JMenu();
+        cutMenuItem = new javax.swing.JMenuItem();
+        copyMenuItem = new javax.swing.JMenuItem();
+        pasteMenuItem = new javax.swing.JMenuItem();
+        deleteMenuItem = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        contentsMenuItem = new javax.swing.JMenuItem();
+        aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlAcoes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                pnlAcoesMouseReleased(evt);
-            }
-        });
+        fileMenu.setMnemonic('f');
+        fileMenu.setText("Opcoes");
 
-        usuarios.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                usuariosFocusGained(evt);
+        negociacao.setMnemonic('o');
+        negociacao.setText("Negociação");
+        negociacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                negociacaoActionPerformed(evt);
             }
         });
-        pnlAcoes.addTab("Usuários", usuarios);
-        pnlAcoes.addTab("Acoes", acoes1);
+        fileMenu.add(negociacao);
 
-        negocios1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                negocios1MouseReleased(evt);
+        Pessoas.setMnemonic('s');
+        Pessoas.setText("Pessoas");
+        Pessoas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PessoasActionPerformed(evt);
             }
         });
-        pnlAcoes.addTab("Negocios", negocios1);
+        fileMenu.add(Pessoas);
+
+        Acoes.setMnemonic('a');
+        Acoes.setText("Acoes");
+        Acoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AcoesActionPerformed(evt);
+            }
+        });
+        fileMenu.add(Acoes);
+
+        exitMenuItem.setMnemonic('x');
+        exitMenuItem.setText("Exit");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(exitMenuItem);
+
+        menuBar.add(fileMenu);
+
+        editMenu.setMnemonic('e');
+        editMenu.setText("Edit");
+
+        cutMenuItem.setMnemonic('t');
+        cutMenuItem.setText("Cut");
+        editMenu.add(cutMenuItem);
+
+        copyMenuItem.setMnemonic('y');
+        copyMenuItem.setText("Copy");
+        editMenu.add(copyMenuItem);
+
+        pasteMenuItem.setMnemonic('p');
+        pasteMenuItem.setText("Paste");
+        editMenu.add(pasteMenuItem);
+
+        deleteMenuItem.setMnemonic('d');
+        deleteMenuItem.setText("Delete");
+        editMenu.add(deleteMenuItem);
+
+        menuBar.add(editMenu);
+
+        helpMenu.setMnemonic('h');
+        helpMenu.setText("Help");
+
+        contentsMenuItem.setMnemonic('c');
+        contentsMenuItem.setText("Contents");
+        helpMenu.add(contentsMenuItem);
+
+        aboutMenuItem.setMnemonic('a');
+        aboutMenuItem.setText("About");
+        helpMenu.add(aboutMenuItem);
+
+        menuBar.add(helpMenu);
+
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlAcoes)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(pnlAcoes, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGap(0, 280, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void pnlAcoesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlAcoesMouseReleased
-       acoes1.carregarAcoes();
-    }//GEN-LAST:event_pnlAcoesMouseReleased
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void usuariosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usuariosFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usuariosFocusGained
+    private void negociacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negociacaoActionPerformed
+        Negocios telaNegocios = new Negocios(this, rootPaneCheckingEnabled);
+        telaNegocios.setVisible(true);
+    }//GEN-LAST:event_negociacaoActionPerformed
 
-    private void negocios1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_negocios1MouseReleased
-       negocios1.carregarAcoes();
-       negocios1.carregarParticipantes();
-    }//GEN-LAST:event_negocios1MouseReleased
+    private void PessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PessoasActionPerformed
+    
+        User telaUsers = new User(this, rootPaneCheckingEnabled);
+        telaUsers.setVisible(true);
+    }//GEN-LAST:event_PessoasActionPerformed
+
+    private void AcoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcoesActionPerformed
+       Empresas telaStocks = new Empresas(this, rootPaneCheckingEnabled);
+       telaStocks.setVisible(true);
+    }//GEN-LAST:event_AcoesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,8 +190,20 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private views.Acoes acoes1;
-    private views.Negocios negocios1;
-    private javax.swing.JTabbedPane pnlAcoes;
+    private javax.swing.JMenuItem Acoes;
+    private javax.swing.JMenuItem Pessoas;
+    private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JMenuItem contentsMenuItem;
+    private javax.swing.JMenuItem copyMenuItem;
+    private javax.swing.JMenuItem cutMenuItem;
+    private javax.swing.JMenuItem deleteMenuItem;
+    private javax.swing.JMenu editMenu;
+    private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem negociacao;
+    private javax.swing.JMenuItem pasteMenuItem;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -1,14 +1,8 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package views;
-
-/**
- *
- * @author felipe
- */
-
 
 import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
 import java.util.ArrayList;
@@ -17,28 +11,24 @@ import javax.swing.table.TableModel;
 import model.Acao;
 import model.AcaoTableModel;
 
-public class Acoes extends javax.swing.JPanel {
+/**
+ *
+ * @author felipe
+ */
+public class Empresas extends javax.swing.JDialog {
 
     /**
-     * Creates new form Acoes
+     * Creates new form Empresas
      */
-    
     List<Acao> acoes;
     PersistenciaJPA jpa;
-    public Acoes(PersistenciaJPA jpa) {
-      
-        this.jpa = jpa;
-               initComponents();
-         carregarAcoes();
-   
-         
-    }
-    
-    public Acoes(){
-        initComponents(); 
+    public Empresas(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        jpa = new PersistenciaJPA();
+        initComponents();
         carregarAcoes();
-       
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,6 +47,8 @@ public class Acoes extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
         jLabel1.setText("Acoes");
 
         tblAcoes.setModel(new AcaoTableModel(new ArrayList<>()));
@@ -72,6 +64,11 @@ public class Acoes extends javax.swing.JPanel {
         jButton2.setText("Editar");
 
         jButton3.setText("Remover");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         btnNovo.setText("Criar");
         btnNovo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -97,7 +94,7 @@ public class Acoes extends javax.swing.JPanel {
                             .addGap(18, 18, 18)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(btnInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,47 +110,95 @@ public class Acoes extends javax.swing.JPanel {
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(btnNovo))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblAcoesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tblAcoesFocusGained
+        carregarAcoes();
+    }//GEN-LAST:event_tblAcoesFocusGained
 
     private void btnNovoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoMouseReleased
         CadastroAcoes telaCadastro = new CadastroAcoes();
         telaCadastro.setVisible(true);
     }//GEN-LAST:event_btnNovoMouseReleased
 
-    private void tblAcoesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tblAcoesFocusGained
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try{
+            System.out.println(tblAcoes.getSelectedRow());
+        jpa.remover(acoes.get(tblAcoes.getSelectedRow()));
         carregarAcoes();
-    }//GEN-LAST:event_tblAcoesFocusGained
-    
-    
-    
-    public void carregarAcoes(){
-                try {
-            // Busca todas as entidades do tipo Acao
-            List<Acao> acoes = (List<Acao>) jpa.findAll(Acao.class);
+        }catch(Exception e){}
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    public void carregarAcoes() {
+        try {
+           acoes = (List<Acao>) jpa.findAll(Acao.class);
             TableModel AcaoTableModel = new AcaoTableModel(acoes);
             tblAcoes.setModel(AcaoTableModel);
-         
-      
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    
-    
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Empresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Empresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Empresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Empresas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Empresas dialog = new Empresas(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInfo;
     private javax.swing.JButton btnNovo;
