@@ -5,11 +5,13 @@
 package views;
 
 import com.mycompany.negociacao_acoes.dao.PersistenciaJPA;
+import java.util.Date;
 import java.util.List;
 import model.Acao;
 import model.Cliente;
 import model.ComboBoxHelper;
 import model.Corretor;
+import model.Negocio;
 import model.Pessoa;
 
 /**
@@ -54,7 +56,9 @@ public class Negocios extends javax.swing.JDialog {
         cmbAcao = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         txtPreco = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnNegocio = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        txtQtd = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -74,7 +78,20 @@ public class Negocios extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Realizar negócio");
+        btnNegocio.setText("Realizar negócio");
+        btnNegocio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNegocioActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Quantidade");
+
+        txtQtd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQtdActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -83,28 +100,32 @@ public class Negocios extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addComponent(btnNegocio, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel6)
+                            .addGap(63, 63, 63)
+                            .addComponent(txtQtd))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmbCorretor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmbComprador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel1)
                             .addGap(76, 76, 76)
                             .addComponent(cmbVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createSequentialGroup()
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel5))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(cmbAcao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtPreco))))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtPreco)))))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -130,8 +151,12 @@ public class Negocios extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnNegocio)
                 .addGap(28, 28, 28))
         );
 
@@ -143,7 +168,9 @@ public class Negocios extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -152,6 +179,28 @@ public class Negocios extends javax.swing.JDialog {
     private void txtPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoActionPerformed
 
     }//GEN-LAST:event_txtPrecoActionPerformed
+
+    private void txtQtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtQtdActionPerformed
+
+    private void btnNegocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNegocioActionPerformed
+     
+        
+        Negocio novo = new Negocio();
+        novo.setVendedor((Cliente)cmbVendedor.getSelectedItem());
+        novo.setComprador((Cliente) cmbComprador.getSelectedItem());
+        novo.setCorretor((Corretor) cmbCorretor.getSelectedItem());
+        novo.setAcao((Acao)cmbAcao.getSelectedItem());
+        novo.setQuantidade(Integer.parseInt(txtQtd.getText()));
+        novo.setData(new Date());
+        
+        try{
+        jpa.persist(novo);
+        jpa.persist(cmbComprador.getSelectedItem());
+        jpa.persist(cmbVendedor.getSelectedItem());
+        }catch(Exception e){}
+    }//GEN-LAST:event_btnNegocioActionPerformed
 
          public void carregarAcoes() {
         try {
@@ -222,17 +271,19 @@ public class Negocios extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNegocio;
     private javax.swing.JComboBox<Acao> cmbAcao;
     private javax.swing.JComboBox<Pessoa> cmbComprador;
     private javax.swing.JComboBox<Pessoa> cmbCorretor;
     private javax.swing.JComboBox<Pessoa> cmbVendedor;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtPreco;
+    private javax.swing.JTextField txtQtd;
     // End of variables declaration//GEN-END:variables
 }
