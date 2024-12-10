@@ -16,20 +16,19 @@ import model.Pessoa;
  */
 public class CadastroUsuarios extends javax.swing.JDialog {
 
+    PersistenciaJPA jpa;
+    Pessoa pessoa;
+    boolean edicao = false;
 
-  PersistenciaJPA jpa;
-  Pessoa pessoa;
-  boolean edicao = false;
-    public  CadastroUsuarios(java.awt.Frame parent, boolean modal) {
+    public CadastroUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-          jpa = new  PersistenciaJPA();        
-          pessoa = new Cliente();
-         initComponents();
+        jpa = new PersistenciaJPA();
+        pessoa = new Cliente();
+        initComponents();
         registroProfissionalPanel.setVisible(false);
-        
+
     }
 
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,12 +161,10 @@ public class CadastroUsuarios extends javax.swing.JDialog {
 
     private void jButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseReleased
 
-       
+        boolean eCorretor = jCheckBox1.isSelected();
 
-        boolean eCorretor = jCheckBox1.isSelected();      
-                                
         String nome = nomeTxtField.getText();
-        
+
         String cpf = cpfTxtField.getText();
         String registro = registroTxtField.getText();
 
@@ -184,25 +181,33 @@ public class CadastroUsuarios extends javax.swing.JDialog {
             sb.append("CPF deve conter apenas 11 números\n");
         }
 
-        if(eCorretor && !registro.matches(regexCpf)){
+        if (eCorretor && !registro.matches(regexCpf)) {
             sb.append("Registro profissional deve conter apenas 11 números");
         }
 
-        if(!sb.isEmpty())
-        {
+        if (!sb.isEmpty()) {
             JOptionPane.showMessageDialog(null, sb, "Nome inválido", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-          if(eCorretor)
-          {
-              ((Corretor) pessoa).setRegistroProfissional(registro);
-//          pessoa = (Corretor) pessoa;;
-           
-          }    
-          pessoa.setCpf(cpf);
-          pessoa.setNome(nome);       
-        
+
+        if (eCorretor) {
+            Corretor corretor = new Corretor();
+            corretor.setCpf(cpf);
+            corretor.setNome(nome);
+            corretor.setRegistroProfissional(registro);
+
+            try {
+                jpa.persist(corretor);
+            } catch (Exception e) {
+                throw new Error(e.getMessage());
+            }
+            dispose();
+            return;
+
+        }
+        pessoa.setCpf(cpf);
+        pessoa.setNome(nome);
+
         try {
             jpa.persist(pessoa);
         } catch (Exception e) {
@@ -219,12 +224,13 @@ public class CadastroUsuarios extends javax.swing.JDialog {
 
     public void setPessoa(Pessoa pessoa) {
         edicao = true;
-        
-        if(pessoa instanceof Corretor)
-            this.pessoa = (Corretor) pessoa; 
-        
+
+        if (pessoa instanceof Corretor) {
+            this.pessoa = (Corretor) pessoa;
+        }
+
         this.pessoa = pessoa;
-        
+
         nomeTxtField.setText(pessoa.getNome());
         cpfTxtField.setText(pessoa.getCpf());
         System.out.println("test");

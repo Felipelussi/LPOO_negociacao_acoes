@@ -25,13 +25,13 @@ public class User extends javax.swing.JDialog {
      */
     List<Pessoa> pessoas;
     PersistenciaJPA jpa;
+
     public User(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
 
         jpa = new PersistenciaJPA();
-       initComponents();
+        initComponents();
         carregarPessoasCadastradas();
-         
 
     }
 
@@ -151,24 +151,24 @@ public class User extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNovoMouseReleased
 
     private void btnDeleteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseReleased
- //
+        //
     }//GEN-LAST:event_btnDeleteMouseReleased
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        EdicaoUsuarios telaCadastro
-                = new EdicaoUsuarios();
-        telaCadastro.setPessoa(pessoas.get(tblUser.getSelectedRow()));
+        EdicaoUsuario telaCadastro
+                = new EdicaoUsuario(null, rootPaneCheckingEnabled);
+        telaCadastro.setPessoa((Cliente)pessoas.get(tblUser.getSelectedRow()));
         telaCadastro.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnUserInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserInfoActionPerformed
         UserInfo userInfo = new UserInfo(null, rootPaneCheckingEnabled);
-        userInfo.carregarAcoesCliente((Cliente)pessoas.get(tblUser.getSelectedRow()));
+        userInfo.carregarAcoesCliente((Cliente) pessoas.get(tblUser.getSelectedRow()));
         userInfo.setVisible(true);
     }//GEN-LAST:event_btnUserInfoActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-       try {
+        try {
             jpa.remover(pessoas.get(tblUser.getSelectedRow()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -178,7 +178,7 @@ public class User extends javax.swing.JDialog {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void tblUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUserMouseClicked
-       tblUser.requestFocusInWindow();
+        tblUser.requestFocusInWindow();
 
     }//GEN-LAST:event_tblUserMouseClicked
 
@@ -187,7 +187,6 @@ public class User extends javax.swing.JDialog {
             pessoas = (List<Pessoa>) jpa.findAll(Pessoa.class);
             TableModel pessoaTable = new PessoaTableModel(pessoas);
             tblUser.setModel(pessoaTable);
-  
 
         } catch (Exception e) {
             e.printStackTrace();

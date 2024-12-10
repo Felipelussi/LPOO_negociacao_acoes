@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package views;
 
@@ -13,20 +13,20 @@ import model.Pessoa;
  *
  * @author felipe
  */
-public class EdicaoUsuarios extends javax.swing.JFrame {
+public class EdicaoUsuario extends javax.swing.JDialog {
 
     /**
-     * Creates new form EdicaoUsuarios
+     * Creates new form EdicaoUsuario
      */
-  PersistenciaJPA jpa;
-  Pessoa pessoa;
-  
-    public EdicaoUsuarios() {
-         jpa = new  PersistenciaJPA();        
-         initComponents();
-       
-        
+    
+    PersistenciaJPA jpa;
+    Cliente pessoa;
+    public EdicaoUsuario(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+          jpa = new  PersistenciaJPA();
+        initComponents();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,18 +36,39 @@ public class EdicaoUsuarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        registroProfissionalPanel = new javax.swing.JPanel();
-        registroTxtField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         cpfTxtField = new javax.swing.JTextField();
         nomeTxtField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
+        registroProfissionalPanel = new javax.swing.JPanel();
+        registroTxtField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jButton1.setText("Cancelar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton1MouseReleased(evt);
+            }
+        });
+
+        jButton2.setText("Salvar");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton2MouseReleased(evt);
+            }
+        });
+
+        jCheckBox1.setText("Corretor");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         registroTxtField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,27 +100,6 @@ public class EdicaoUsuarios extends javax.swing.JFrame {
         jLabel1.setText("Nome:");
 
         jLabel2.setText("CPF:");
-
-        jButton1.setText("Cancelar");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton1MouseReleased(evt);
-            }
-        });
-
-        jButton2.setText("Salvar");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton2MouseReleased(evt);
-            }
-        });
-
-        jCheckBox1.setText("Corretor");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,22 +149,16 @@ public class EdicaoUsuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void registroTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroTxtFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_registroTxtFieldActionPerformed
-
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
         dispose();
     }//GEN-LAST:event_jButton1MouseReleased
 
     private void jButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseReleased
 
-        boolean eCorretor = jCheckBox1.isSelected();
 
         String nome = nomeTxtField.getText();
 
         String cpf = cpfTxtField.getText();
-        String registro = registroTxtField.getText();
 
         String regexNome = "^[a-zA-ZáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛãõÃÕçÇ ]+$";
         String regexCpf = "^\\d{11}$";
@@ -178,43 +172,37 @@ public class EdicaoUsuarios extends javax.swing.JFrame {
         if (!cpf.matches(regexCpf)) {
             sb.append("CPF deve conter apenas 11 números\n");
         }
-
-        if(eCorretor && !registro.matches(regexCpf)){
-            sb.append("Registro profissional deve conter apenas 11 números");
-        }
         
+      
+
         pessoa.setCpf(cpf);
         pessoa.setNome(nome);
-        
-        if(eCorretor){
-            ((Corretor) pessoa).setRegistroProfissional(registro);
-        }
-        
+
+
         try{
-            jpa.persist(pessoa);
+            jpa.update(pessoa);
             dispose();
         }catch(Exception E){}
 
- 
     }//GEN-LAST:event_jButton2MouseReleased
 
+        
+    public void setPessoa(Cliente pessoa){
+        this.pessoa = pessoa;
+        nomeTxtField.setText(pessoa.getNome());
+        cpfTxtField.setText(pessoa.getCpf());
+    
+            jCheckBox1.setVisible(false);
+
+    }
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         registroProfissionalPanel.setVisible(!registroProfissionalPanel.isVisible());
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    
-    public void setPessoa(Pessoa pessoa){
-        this.pessoa = pessoa;
-        nomeTxtField.setText(pessoa.getNome());
-        cpfTxtField.setText(pessoa.getCpf());
-        if (pessoa instanceof Corretor) {
-            Corretor corretor = (Corretor) pessoa;
-            registroProfissionalPanel.setVisible(true);
-            jCheckBox1.setSelected(true);
-            jCheckBox1.setVisible(false);
-            registroTxtField.setText(corretor.getRegistroProfissional());
-        }
-    }
+    private void registroTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroTxtFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registroTxtFieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -232,20 +220,27 @@ public class EdicaoUsuarios extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EdicaoUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EdicaoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EdicaoUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EdicaoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EdicaoUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EdicaoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EdicaoUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EdicaoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EdicaoUsuarios().setVisible(true);
+                EdicaoUsuario dialog = new EdicaoUsuario(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

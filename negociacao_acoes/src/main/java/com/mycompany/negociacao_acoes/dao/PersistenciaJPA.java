@@ -70,13 +70,17 @@ public class PersistenciaJPA implements InterfaceDB {
         // Usando inTransaction para gerenciar transações
         inTransaction(entityManager -> entityManager.persist(o));
     }
+    
+    
+    public void update(Object o) throws Exception {
+        // Usando inTransaction para gerenciar transações
+        inTransaction(entityManager -> entityManager.persist(entityManager.merge(o)));
+    }
 
     @Override
     public void remover(Object o) throws Exception {
         inTransaction(entityManager -> {
             Object objeto = o;
-            System.out.println("aka");
-            System.out.println(o);
             if (!entityManager.contains(objeto)) {
                 objeto = entityManager.merge(objeto);
             }
